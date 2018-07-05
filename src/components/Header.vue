@@ -10,10 +10,10 @@
     )
     .divider
     .inp__label Price within ±
-    input.inp(placeholder="$$$", :options="[]", :searchable="false")
+    input.inp(placeholder="$$$", :options="[]", :searchable="false", value="10000")
     .divider
     .inp__label Distance within ±
-    input.inp(placeholder="n miles", :options="[]", :searchable="false")
+    input.inp(placeholder="n miles", :options="[]", :searchable="false", value="1")
 </template>
 <script>
 import Multiselect from 'vue-multiselect'

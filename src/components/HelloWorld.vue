@@ -32,11 +32,18 @@
     },
     methods: {
       update (loc) {
+        // Update the housing markers and fetch new ones.
+        this.query(loc);
+        this.position = loc;
+
+        // Update the map
         this.$refs.map.$mapPromise.then((map) => {
           map.panTo(loc)
           map.setZoom(18)
-          this.position = loc
         })
+      },
+      query () {
+
       }
     }
   }
