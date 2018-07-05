@@ -1,11 +1,12 @@
 <template>
   <div>
-    <Header/>
+    <Header @update="update"/>
     <google-map
       :center="position"
       :zoom="11"
       id="map"
       :options="{disableDefaultUI:true}"
+      ref="map"
     >
       <google-marker
         :position="position"
@@ -27,6 +28,15 @@
     data () {
       return {
         position: {lat:33.4484, lng:-112.0740}
+      }
+    },
+    methods: {
+      update (loc) {
+        this.$refs.map.$mapPromise.then((map) => {
+          map.panTo(loc)
+          map.setZoom(18)
+          this.position = loc
+        })
       }
     }
   }

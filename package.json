@@ -10,9 +10,11 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "request": "^2.87.0",
     "retsly-js-sdk": "^0.8.6",
     "type": "0.0.3",
     "vue": "^2.5.2",
+    "vue-google-autocomplete": "^1.1.0",
     "vue-resource": "^1.5.1",
     "vue-router": "^3.0.1"
   },

@@ -1,34 +1,67 @@
 <template lang="pug">
-  div#header
-    input.inp__long(placeholder="Enter a Street Address")
-    div.inp__label Price within ±
-    input.inp__long(placeholder="$$$", :options="[]", :searchable="false")
-    div.inp__label Distance within ±
-    input.inp__long(placeholder="$$$", :options="[]", :searchable="false")
+  div#header__container
+    VueGoogleAutocomplete.inp.inp__long(
+      ref="address",
+      id="place",
+      classname="form-control",
+      @placechanged="updateMap",
+      country="us"
+      v-if="enabled"
+    )
+    .divider
+    .inp__label Price within ±
+    input.inp(placeholder="$$$", :options="[]", :searchable="false")
+    .divider
+    .inp__label Distance within ±
+    input.inp(placeholder="n miles", :options="[]", :searchable="false")
 </template>
 <script>
 import Multiselect from 'vue-multiselect'
+import VueGoogleAutocomplete from 'vue-google-autocomplete'
+import * as VueGoogleMaps from 'vue2-google-maps';
+
 export default {
   name: 'header',
   components: {
-    Multiselect
+    Multiselect,
+    VueGoogleAutocomplete
+  },
+  data () {
+    VueGoogleMaps.loaded.then(() => {
+      window.google = VueGoogleMaps.gmapApi();
+      this.enabled = true;
+    });
+
+    return {
+      enabled: false
+    }
+  },
+  methods: {
+    updateMap (addressData, placeResultData, id) {
+      this.address = addressData;
+      console.log(addressData);
+      this.$emit('update', {
+        lat: addressData.latitude,
+        lng: addressData.longitude
+      })
+    }
   }
 }
 </script>
 <style>
   @import url('https://fonts.googleapis.com/css?family=Nunito');
-  #header {
+  #header__container {
     z-index:100;
     position: absolute;
     top: 0px;
     left: 0px;
     width: 100%;
-    height: 80px;
-    padding: 20px;
+    height: 50px;
+    padding: 0px;
     box-sizing: border-box;
-    background-color: rgba(0,0,0,0.6);
+    background-color:rgba(18, 119, 225, 0.7)
   }
-  .inp__long {
+  .inp {
     padding: 10px;
     font-family: Nunito;
     font-size: 13px;
@@ -36,16 +69,27 @@ export default {
     border: 0;
     border-radius: 3px;
     box-shadow: 1px 1px 1px rgba(0,0,0,0.3);
-    margin: 0 15px;
+    margin: 5px 15px;
     float: left;
     background-color: #FFF;
+    width: 70px;
+    text-align: center;
+  }
+  .inp.inp__long {
+    width: 300px;
   }
   .inp__label {
     padding: 10px;
-    margin: 0 15px;
+    margin: 5px 15px;
     float: left;
     color: #FFF;
     font-family: Nunito;
     font-size: 13px;
+  }
+  .divider {
+    height: 100%;
+    background-color: rgba(255,255,255,0.8);
+    width: 1px;
+    float: left;
   }
 </style>
