@@ -1,17 +1,23 @@
 <template>
   <div>
-    <Header @update="update"/>
+    <Header @update="update" v-model="selected"/>
     <google-map
       :center="position"
       :zoom="11"
       id="map"
-      :options="{disableDefaultUI:true}"
       ref="map"
     >
       <google-marker
         :position="position"
         :clickable="true"
         :draggable="true"
+      />
+
+      <google-marker
+        v-bind:key="index"
+        v-for="(marker, index) in markers"
+        :label="marker.cash.toString()"
+        :position="marker"
       />
     </google-map>
   </div>
@@ -27,7 +33,13 @@
     },
     data () {
       return {
-        position: {lat:33.4484, lng:-112.0740}
+        markers: [],
+        position: {lat:33.4484, lng:-112.0740},
+        selected: {
+          radius: 0,
+          price: 0,
+          pDelta: 0
+        }
       }
     },
     methods: {
@@ -42,8 +54,28 @@
           map.setZoom(18)
         })
       },
-      query () {
-
+      query (loc) {
+        const {distance, price, pDelta} = this.selected;
+        this.$http.get([
+          'https://rets.io/api/v2/armls/listings',
+          '?access_token=71356a24f85ff5b0d977ba18bf56f2ff',
+          `&near=${loc.lng},${loc.lat}&radius=${distance}mi`,
+          `&ClosePrice[gt]=${price-pDelta}`,
+          `&ClosePrice[lt]=${price+pDelta}`
+        ].join(''))
+          .then(a => this.markers = a.body.bundle.map(a => ({
+            lat: a.Coordinates[1],
+            lng: a.Coordinates[0],
+            cash: a.ClosePrice
+          })));
+      }
+    },
+    watch: {
+      selected: {
+        handler () {
+          this.query(this.position)
+        },
+        deep: true
       }
     }
   }

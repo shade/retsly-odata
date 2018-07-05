@@ -7,13 +7,16 @@
       @placechanged="updateMap",
       country="us"
       v-if="enabled"
+      placeholder="Enter an Address"
     )
     .divider
-    .inp__label Price within ±
-    input.inp(placeholder="$$$", :options="[]", :searchable="false", value="10000")
+    .inp__label Price is:
+    input.inp(placeholder="$$$", :options="[]", :searchable="false", value="10000", v-model="a.price")
+    .inp__label ±
+    input.inp(placeholder="$$$", :options="[]", :searchable="false", value="10000", v-model="a.pDelta")
     .divider
     .inp__label Distance within ±
-    input.inp(placeholder="n miles", :options="[]", :searchable="false", value="1")
+    input.inp(placeholder="n miles", :options="[]", :searchable="false", value="1", v-model="a.distance")
 </template>
 <script>
 import Multiselect from 'vue-multiselect'
@@ -33,17 +36,29 @@ export default {
     });
 
     return {
+      a: {
+        price: 0,
+        pDelta: 0,
+        distance: 0
+      },
       enabled: false
     }
   },
   methods: {
     updateMap (addressData, placeResultData, id) {
       this.address = addressData;
-      console.log(addressData);
       this.$emit('update', {
         lat: addressData.latitude,
         lng: addressData.longitude
       })
+    }
+  },
+  watch: {
+    a: {
+      handler () {
+        this.$emit('input', this.a);
+      },
+      deep: true
     }
   }
 }
