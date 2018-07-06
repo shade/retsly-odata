@@ -1,5 +1,6 @@
 <template lang="pug">
   div#header__container
+    #header__title CompsTool
     VueGoogleAutocomplete.inp.inp__long(
       ref="address",
       id="place",
@@ -64,7 +65,15 @@ export default {
 }
 </script>
 <style>
-  @import url('https://fonts.googleapis.com/css?family=Nunito');
+  @import url('https://fonts.googleapis.com/css?family=Nunito|Pacifico');
+  #header__title {
+    font-family: Pacifico;
+    font-size: 20px;
+    font-weight: 100;
+    float: left;
+    color: #FFF;
+    margin: 5px 30px;
+  }
   #header__container {
     z-index:100;
     position: absolute;
@@ -74,7 +83,9 @@ export default {
     height: 50px;
     padding: 0px;
     box-sizing: border-box;
-    background-color:rgba(18, 119, 225, 0.7)
+    background-color:rgba(18, 119, 225);
+    box-shadow: 0px 2px 2px rgba(0,0,0,0.3);
+
   }
   .inp {
     padding: 10px;
@@ -103,7 +114,7 @@ export default {
   }
   .divider {
     height: 100%;
-    background-color: rgba(255,255,255,0.8);
+    background-color: rgba(255,255,255,0.2);
     width: 1px;
     float: left;
   }

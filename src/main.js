@@ -17,7 +17,7 @@ Vue.use(VueGoogleMaps, {
 Vue.use(VueResource);
 
 Vue.component('google-map', VueGoogleMaps.Map);
-Vue.component('google-marker', VueGoogleMaps.Marker);
+Vue.component('google-marker', VueGoogleMaps.InfoWindow);
 
 /* eslint-disable no-new */
 new Vue({

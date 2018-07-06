@@ -1,26 +1,12 @@
-<template>
-  <div>
-    <Header @update="update" v-model="selected"/>
-    <google-map
-      :center="position"
-      :zoom="11"
-      id="map"
+<template lang="pug">
+  div
+    Header(@update="update", v-model="selected")
+    google-map(
+      :center="position",
+      :zoom="11",
+      id="map",
       ref="map"
-    >
-      <google-marker
-        :position="position"
-        :clickable="true"
-        :draggable="true"
-      />
-
-      <google-marker
-        v-bind:key="index"
-        v-for="(marker, index) in markers"
-        :label="marker.cash.toString()"
-        :position="marker"
-      />
-    </google-map>
-  </div>
+    )
 </template>
 
 <script>
@@ -31,8 +17,12 @@
     components: {
       Header
     },
+    mounted () {
+      this.mapObj = map.__vue__.$mapObject.set
+    },
     data () {
       return {
+        mapObj: null,
         markers: [],
         position: {lat:33.4484, lng:-112.0740},
         selected: {
@@ -54,8 +44,26 @@
           map.setZoom(18)
         })
       },
+      updateMarkers (bundle) {
+        bundle.slice(0,1).forEach(item => {
+          const price = item.ClosePrice || 0
+          const priceStr = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+
+          ({
+            full: item,
+            lat: item.Coordinates[0],
+            lng: item.Coordinates[1],
+            price: price,
+            contentStr: priceStr
+          })
+        })
+      },
       query (loc) {
-        const {distance, price, pDelta} = this.selected;
+        let {distance, price, pDelta} = this.selected
+
+        price = parseInt(price)
+        pDelta = parseInt(pDelta)
+
         this.$http.get([
           'https://rets.io/api/v2/armls/listings',
           '?access_token=71356a24f85ff5b0d977ba18bf56f2ff',
@@ -63,11 +71,9 @@
           `&ClosePrice[gt]=${price-pDelta}`,
           `&ClosePrice[lt]=${price+pDelta}`
         ].join(''))
-          .then(a => this.markers = a.body.bundle.map(a => ({
-            lat: a.Coordinates[1],
-            lng: a.Coordinates[0],
-            cash: a.ClosePrice
-          })));
+          .then(a => {
+            this.updateMarkers(a.body.bundle);
+          })
       }
     },
     watch: {
@@ -86,6 +92,10 @@
     width: 100%;
   }
   #map {
-    width: 100%; height: 100%;position: absolute;top:0px;left:0px;
+    width: 100%;
+    height: calc(100% - 50px);
+    position: absolute;
+    top: 50px;
+    left: 0px;
   }
 </style>
