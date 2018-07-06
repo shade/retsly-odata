@@ -6,7 +6,9 @@
       :zoom="11",
       id="map",
       ref="map"
+      :options="{mapTypeId:'satellite'}"
     )
+      google-marker(:position="position")
 </template>
 
 <script>
@@ -23,6 +25,7 @@
         queryTimeout: null,
         mapObj: null,
         markers: [],
+        circle: null,
         position: {lat:33.4484, lng:-112.0740},
         selected: {
           radius: 1,
@@ -33,15 +36,10 @@
     },
     methods: {
       update (loc) {
-        // Clear the markers if the position has changed.
-        if (loc.lat !== this.position.lat || loc.lng !== this.position.lng) {
-          this.clearMarkers()
-        }
-
+        this.clearMarkers()
         this.position = loc
 
         clearTimeout(this.queryTimeout)
-
         this.queryTimeout = setTimeout(() => {
           this.lastUpdate = Date.now()
           // Update the housing markers and fetch new ones.
@@ -52,6 +50,16 @@
             map.panTo(loc)
             map.setZoom(16)
           })
+          this.circle = new google.maps.Circle({
+            strokeColor: '#1277e1',
+            strokeOpacity: 0.6,
+            strokeWeight: 2,
+            fillColor: '#1277e1',
+            fillOpacity: 0.1,
+            map: this.$refs.map.$mapObject,
+            center: this.position,
+            radius: this.selected.radius * 1600
+          });
         }, 1000)
       },
       clearMarkers () {
@@ -62,7 +70,7 @@
       updateMarkers (bundle) {
         bundle.forEach(item => {
           const price = item.ClosePrice || 0
-          const priceStr = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+          const priceStr = `$${price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`
 
           const lat = item.Coordinates[1]
           const lng = item.Coordinates[0]
