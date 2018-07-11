@@ -1,0 +1,25 @@
+{
+  "name": "odata-js-sdk",
+  "version": "0.0.1",
+  "description": "Retsly OData JS SDK",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.rets.io:joetho/odata-js-sdk.git"
+  },
+  "keywords": [
+    "OData",
+    "Retsly",
+    "test"
+  ],
+  "author": "Joe joetho@zillowgroup.com",
+  "license": "MIT",
+  "dependencies": {
+    "assert": "^1.4.1",
+    "mocha": "^5.2.0",
+    "superagent": "^3.8.3"
+  }
+}

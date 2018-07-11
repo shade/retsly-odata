@@ -17,7 +17,7 @@ class RetslyOData {
    */
   constructor (token, endpoint, opts) {
     // Set default options.
-    this.dataset = TEST_DATASET;
+    this._dataset = TEST_DATASET;
     this.urlBase = '/api/v2/OData';
 
     // Make sure the token is specified
@@ -46,16 +46,16 @@ class RetslyOData {
     }
 
     Object.assign(this, opts);
-    this.token = token;
+    this._token = token;
     this.query = {};
   }
 
   exec (cb) {
-    const {token, urlBase, query} = this;
+    const {_token, urlBase, query, _dataset} = this;
     request
-      .get(`${RETS_URL}${urlBase}`)
+      .get(`${RETS_URL}${urlBase}/${_dataset}`)
       .query(query)
-      .set('Authorization',`Bearer ${token}`)
+      .set('Authorization',`Bearer ${_token}`)
       .end((err, resp) => {
         // Set the response so we can paginate.
         this.resp = resp;
@@ -63,17 +63,17 @@ class RetslyOData {
           this.resp = null;
         }
 
-        cb && cb();
+        cb && cb(err, resp);
       });
   }
 
   token (token) {
-    this.token = token;
+    this._token = token;
     return this;
   }
 
   dataset (data) {
-    this.dataset = data;
+    this._dataset = data;
     return this;
   }
 
@@ -137,15 +137,17 @@ class RetslyOData {
   }
 
   setToken (token) {
-    this.token = token;
+    this._token = token;
     return;
   }
 
   getToken () {
-    return this.token;
+    return this._token;
   }
 
   static testToken () {
     return TEST_TOKEN;
   }
 }
+
+module.exports = RetslyOData;
