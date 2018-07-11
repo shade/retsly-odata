@@ -1,6 +1,7 @@
 /*jshint esversion: 6 */
 
-const emitter = require('component-emitter');
+const FilterParser = require('./filterParser');
+
 const RETS_URL = 'http://rets.io';
 const DEFAULT_OPTIONS = [ 'urlBase' ];
 const VALID_ENDPOINTS = [ 'Property', 'Properties', 'Member', 'Office', 'Openhouse', 'Media' ];
@@ -103,7 +104,8 @@ class RetslyOData {
     if (typeof data === 'string') {
       this._updateQuery('$filter', data);
     } else if (typeof data === 'object') {
-
+      const query = new FilterParser(data).toString();
+      this._updateQuery('$filter', query);
     } else {
       throw new TypeError('$filter must either be a string or a specific object');
     }

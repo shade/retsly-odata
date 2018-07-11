@@ -2,7 +2,7 @@
 
 class FilterNode {
   constructor (obj) {
-    if (!(obj.subject && obj.comparator && obj.value)) {
+    if (!(obj.subject && obj.comparator && obj.object)) {
       throw new Error('FilterNode must have a subject, object and comparator.')
     }
 
@@ -24,7 +24,9 @@ class FilterNode {
   }
 
   toString () {
-    const {subject, comparator, value} = this;
-    return `${subject} ${comparator} ${value}`;
+    const {subject, comparator, object} = this;
+    return `${subject} ${comparator} ${object}`;
   }
 }
+
+module.exports = FilterNode;
