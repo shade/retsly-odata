@@ -3,6 +3,8 @@
 const emitter = require('component-emitter');
 const RETS_URL = 'http://rets.io';
 const DEFAULT_OPTIONS = [ 'urlBase' ];
+const TEST_DATASET = 'test';
+const TEST_TOKEN = '6baca547742c6f96a6ff71b138424f21';
 
 class RetslyOData {
   /**
@@ -12,7 +14,7 @@ class RetslyOData {
    */
   constructor (token, opts) {
     // Set default options.
-    this.dataset = 'test';
+    this.dataset = TEST_DATASET;
     this.urlBase = '/api/v2/OData';
 
     // Make sure the token is specified
@@ -40,6 +42,7 @@ class RetslyOData {
 
   dataset (data) {
     this.dataset = data;
+    return this;
   }
 
   $skip (data) {
@@ -69,8 +72,11 @@ class RetslyOData {
 
   $orderby (data) {
     // Data MUST be in format 'FIELD ASC|DSC'.
-    const [field, order] = data.split(' ');
+    const [field, order, invalid] = data.split(' ');
 
+    if (invalid || !['asc','dsc'].includes(order.toLowerCase())) {
+      throw new SyntaxError('$orderby MUST be in format "FIELD (ASC|DSC)"');
+    }
 
     this._updateQuery('$orderby', data);
     return this;
@@ -81,7 +87,6 @@ class RetslyOData {
     return this;
   }
 
-
   setToken (token) {
     this.token = token;
     return;
@@ -89,5 +94,9 @@ class RetslyOData {
 
   getToken () {
     return this.token;
+  }
+
+  static testToken () {
+    return TEST_TOKEN;
   }
 }
