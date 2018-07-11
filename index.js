@@ -1,5 +1,6 @@
 /*jshint esversion: 6 */
 
+const request = require('superagent')
 const FilterParser = require('./filterParser');
 
 const RETS_URL = 'http://rets.io';
@@ -46,6 +47,24 @@ class RetslyOData {
 
     Object.assign(this, opts);
     this.token = token;
+    this.query = {};
+  }
+
+  exec (cb) {
+    const {token, urlBase, query} = this;
+    request
+      .get(`${RETS_URL}${urlBase}`)
+      .query(query)
+      .set('Authorization',`Bearer ${token}`)
+      .end((err, resp) => {
+        // Set the response so we can paginate.
+        this.resp = resp;
+        if (err) {
+          this.resp = null;
+        }
+
+        cb && cb();
+      });
   }
 
   token (token) {
@@ -56,6 +75,10 @@ class RetslyOData {
   dataset (data) {
     this.dataset = data;
     return this;
+  }
+
+  _updateQuery (key, value) {
+    this.query[key] = value;
   }
 
   $skip (data) {
