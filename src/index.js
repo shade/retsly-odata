@@ -1,7 +1,7 @@
 /* jshint esversion: 6 */
 
 const request = require('superagent')
-const FilterParser = require('./filterParser')
+const FilterParser = require('./filter')
 
 const RETS_URL = 'http://rets.io'
 const DEFAULT_OPTIONS = [ 'urlBase' ]
