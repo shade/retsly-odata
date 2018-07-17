@@ -51,19 +51,6 @@ class RetslyOData {
     this.endpoint = `OpenHouse${key?`(${key})`:''}`
   }
 
-  _verifyResponse (command) {
-    if (!this.response || this.response.status !== 200) {
-      throw new Error(`Please execute a valid query before using ${command}`)
-    }
-  }
-  _bundleLength () {
-    if (this.response.value && this.response.value.length) {
-      return this.response.value.length
-    }
-
-    return config.DEFAULT_BUNDLE_LENGTH
-  }
-
   count () {
     this._verifyResponse('count()')
     let value = this.response.value
@@ -93,6 +80,20 @@ class RetslyOData {
     }
     this.$skip(-this._bundleLength(), true)
     return this.exec(cb)
+  }
+
+  /** namespaced for private access */
+  _verifyResponse (command) {
+    if (!this.response || this.response.status !== 200) {
+      throw new Error(`Please execute a valid query before using ${command}`)
+    }
+  }
+  _bundleLength () {
+    if (this.response.value && this.response.value.length) {
+      return this.response.value.length
+    }
+
+    return config.DEFAULT_BUNDLE_LENGTH
   }
 }
 
