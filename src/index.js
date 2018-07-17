@@ -1,7 +1,8 @@
 /* jshint esversion: 6 */
 
 const request = require('superagent')
-const FilterParser = require('./filter')
+const config = require('./config')
+const Filter = require('./filter')
 
 const RETS_URL = 'http://rets.io'
 const DEFAULT_OPTIONS = [ 'urlBase' ]
@@ -15,7 +16,7 @@ class RetslyOData {
    * @param {String} token - The provided Auth token
    * @param {Object} opts - An object of options
    */
-  constructor (token, endpoint, opts) {
+  constructor (token, dataset, endpoint, opts) {
     // Set default options.
     this._dataset = TEST_DATASET
     this.urlBase = '/api/v2/OData'
@@ -127,7 +128,7 @@ class RetslyOData {
     if (typeof data === 'string') {
       this._updateQuery('$filter', data)
     } else if (typeof data === 'object') {
-      const query = new FilterParser(data).toString()
+      const query = filter.toString(data)
       this._updateQuery('$filter', query)
     } else {
       throw new TypeError('$filter must either be a string or a specific object')
@@ -143,10 +144,9 @@ class RetslyOData {
   getToken () {
     return this._token
   }
-
-  static testToken () {
-    return TEST_TOKEN
-  }
 }
+
+// Constants
+RetslyOData.TEST_TOKEN = config.TEST_TOKEN
 
 module.exports = RetslyOData
