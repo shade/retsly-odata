@@ -20,19 +20,50 @@ class RetslyOData {
     if (!token) {
       throw new Error('Please provide a token. Otherwise, use the test token via Retsly.TEST_TOKEN')
     }
+
+    this.endpoint = null
+    this.response = null
   }
 
   Property (key) {
+    // Response reset, otherwise count(), next(), and prev() will still work.
+    this.response = null
     this.endpoint = `Property${key?`(${key})`:''}`
   }
   Member (key) {
+    // Response reset, otherwise count(), next(), and prev() will still work.
+    this.response = null
     this.endpoint = `Member${key?`(${key})`:''}`
   }
   Office (key) {
+    // Response reset, otherwise count(), next(), and prev() will still work.
+    this.response = null
     this.endpoint = `Office${key?`(${key})`:''}`
   }
   OpenHouse (key) {
+    // Response reset, otherwise count(), next(), and prev() will still work.
+    this.response = null
     this.endpoint = `OpenHouse${key?`(${key})`:''}`
+  }
+
+  count () {
+    // Gaurd against invalid responses
+    if (!this.response || this.response.status !== 200) return 0
+    return this.response['@odata.count']
+  }
+
+  next () {
+    // If we have hit the end.
+    if (this.$skip >= this.count()) {
+      return []
+    }
+  }
+
+  prev () {
+    // If we have hit the beginning.
+    if (this.$skip <= 0) {
+      return []
+    }
   }
 }
 
