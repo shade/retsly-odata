@@ -2,16 +2,11 @@ const request = require('superagent')
 const config = require('./config')
 const Filter = require('./filter')
 
-const RETS_URL = 'http://rets.io/api/v2/OData/'
-const VALID_ENDPOINTS = [ 'Property', 'Properties', 'Member', 'Office', 'Openhouse', 'Media' ]
-const TEST_DATASET = 'test'
-const TEST_TOKEN = '6baca547742c6f96a6ff71b138424f21'
-
 class RetslyOData {
 
   constructor (token, vendor) {
     if (!vendor) {
-      this.vendor = 'test'
+      this.vendor = config.TEST_DATASET
     } else {
       this.vendor = vendor
     }
@@ -28,7 +23,7 @@ class RetslyOData {
   exec (cb) {
     const {vendor, endpoint, query} = this
     const req = request
-      .get(`${BASE_URL}${vendor}/${endpoint}`)
+      .get(`${config.BASE_URL}${vendor}/${endpoint}`)
       .query(query)
 
     // If we have a specified cb, use that, otherwise, let go of the promise.
