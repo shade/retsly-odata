@@ -34,21 +34,25 @@ class RetslyOData {
     // Response reset, otherwise count(), next(), and prev() will still work.
     this.response = null
     this.endpoint = `Property${key?`(${key})`:''}`
+    return this
   }
   Member (key) {
     // Response reset, otherwise count(), next(), and prev() will still work.
     this.response = null
     this.endpoint = `Member${key?`(${key})`:''}`
+    return this
   }
   Office (key) {
     // Response reset, otherwise count(), next(), and prev() will still work.
     this.response = null
     this.endpoint = `Office${key?`(${key})`:''}`
+    return this
   }
   OpenHouse (key) {
     // Response reset, otherwise count(), next(), and prev() will still work.
     this.response = null
     this.endpoint = `OpenHouse${key?`(${key})`:''}`
+    return this
   }
 
   count () {

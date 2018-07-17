@@ -4,7 +4,7 @@ const assert = require('assert')
 describe('No param routes', () => {
   describe('Properties', () => {
     it('should return a list of properties and get one', done => {
-      let r = new Retsly(Retsly.ACCESS_TOKEN, 'test')
+      let r = new Retsly(Retsly.TEST_TOKEN, 'test')
         .Properties()
         .exec(done)
     })
@@ -12,7 +12,7 @@ describe('No param routes', () => {
 
   describe('Media', () => {
     it('should return a list of Media and get one', done => {
-      let r = new Retsly(Retsly.ACCESS_TOKEN, 'test')
+      let r = new Retsly(Retsly.TEST_TOKEN, 'test')
         .Media()
         .exec(done)
     })
@@ -20,7 +20,7 @@ describe('No param routes', () => {
 
   describe('Openhouse', () => {
     it('should return a list of Openhouse and get one', done => {
-      let r = new Retsly(Retsly.ACCESS_TOKEN, 'test')
+      let r = new Retsly(Retsly.TEST_TOKEN, 'test')
         .Openhouse()
         .exec(done)
     })
@@ -28,7 +28,7 @@ describe('No param routes', () => {
 
   describe('Office', () => {
     it('should return a list of Office and get one', done => {
-      let r = new Retsly(Retsly.ACCESS_TOKEN, 'test')
+      let r = new Retsly(Retsly.TEST_TOKEN, 'test')
         .Office()
         .exec(done)
     })
@@ -36,7 +36,7 @@ describe('No param routes', () => {
 
   describe('Member', () => {
     it('should return a list of Member and get one', done => {
-      let r = new Retsly(Retsly.ACCESS_TOKEN, 'test')
+      let r = new Retsly(Retsly.TEST_TOKEN, 'test')
         .Member()
         .exec(done)
     })
