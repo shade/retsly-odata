@@ -20,7 +20,6 @@ class RetslyOData {
     // Set default options.
     this._dataset = TEST_DATASET
     this.urlBase = '/api/v2/OData'
-
     // Make sure the token is specified
     if (!token) {
       const msg = 'You must provide a browser token e.g. `new Retsly(token, endpoint)`'
@@ -54,7 +53,7 @@ class RetslyOData {
   exec (cb) {
     const {_token, urlBase, query, _dataset} = this
     request
-      .get(`${RETS_URL}${urlBase}/${_dataset}`)
+      .get(`${RETS_URL}${urlBase}/${this.endpoint}/${_dataset}`)
       .query(query)
       .set('Authorization', `Bearer ${_token}`)
       .end((err, resp) => {
@@ -76,6 +75,14 @@ class RetslyOData {
   dataset (data) {
     this._dataset = data
     return this
+  }
+
+  endpoint (endpoint) {
+    if (!VALID_ENDPOINTS.includes(endpoint)) {
+      throw new Error('Please provide a valid OData Endpoint')
+    }
+
+    this.endpoint = endpoint
   }
 
   _updateQuery (key, value) {

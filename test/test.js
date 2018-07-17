@@ -4,7 +4,7 @@ const TEST_TOKEN = '6baca547742c6f96a6ff71b138424f21'
 
 describe('No param routes', () => {
   describe('Properties', () => {
-    it('should return a list of properties', done => {
+    it('should return a list of properties and get one', done => {
       let r = new Retsly(TEST_TOKEN, 'Properties')
       r.dataset('test')
       r.exec(done)
@@ -12,7 +12,7 @@ describe('No param routes', () => {
   })
 
   describe('Media', () => {
-    it('should return a list of Media', done => {
+    it('should return a list of Media and get one', done => {
       let r = new Retsly(TEST_TOKEN, 'Media')
       r.dataset('test')
       r.exec(done)
@@ -20,7 +20,7 @@ describe('No param routes', () => {
   })
 
   describe('Openhouse', () => {
-    it('should return a list of Openhouse', done => {
+    it('should return a list of Openhouse and get one', done => {
       let r = new Retsly(TEST_TOKEN, 'Openhouse')
       r.dataset('test')
       r.exec(done)
@@ -28,7 +28,7 @@ describe('No param routes', () => {
   })
 
   describe('Office', () => {
-    it('should return a list of Office', done => {
+    it('should return a list of Office and get one', done => {
       let r = new Retsly(TEST_TOKEN, 'Office')
       r.dataset('test')
       r.exec(done)
@@ -36,7 +36,7 @@ describe('No param routes', () => {
   })
 
   describe('Member', () => {
-    it('should return a list of Member', done => {
+    it('should return a list of Member and get one', done => {
       let r = new Retsly(TEST_TOKEN, 'Member')
       r.dataset('test')
       r.exec(done)
