@@ -46,24 +46,42 @@ class RetslyOData {
     this.endpoint = `OpenHouse${key?`(${key})`:''}`
   }
 
-  count () {
-    // Gaurd against invalid responses
-    if (!this.response || this.response.status !== 200) return 0
-    return this.response['@odata.count']
+  _verifyResponse (command) {
+    if (!this.response || this.response.status !== 200) {
+      throw new Error(`Please execute a valid query before using ${command}`)
+    }
+  }
+  _bundleLength () {
+    if (this.response.value && this.response.value.length) {
+      return this.response.value.length
+    }
+
+    return config.DEFAULT_BUNDLE_LENGTH
   }
 
-  next () {
+  count () {
+    this._verifyResponse('count()')
+
+  }
+
+  next (cb) {
+    this._verifyResponse('next()')
     // If we have hit the end.
     if (this.$skip >= this.count()) {
       return []
     }
+    this.$skip(this._bundleLength(), true)
+    return this.exec(cb)
   }
 
-  prev () {
+  prev (cb) {
+    this._verifyResponse('prev()')
     // If we have hit the beginning.
     if (this.$skip <= 0) {
       return []
     }
+    this.$skip(-this._bundleLength(), true)
+    return this.exec(cb)
   }
 }
 
