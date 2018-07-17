@@ -1,5 +1,3 @@
-/* jshint esversion: 6 */
-
 const request = require('superagent')
 const config = require('./config')
 const Filter = require('./filter')
@@ -61,7 +59,13 @@ class RetslyOData {
 
   count () {
     this._verifyResponse('count()')
+    let value = this.response.value
 
+    if (value.length) {
+      return value.length
+    } else {
+      return 0
+    }
   }
 
   next (cb) {
