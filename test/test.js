@@ -2,26 +2,19 @@ const Retsly = require('../src/index')
 const assert = require('assert')
 
 describe('No param routes', () => {
-  describe('Properties', () => {
+  describe('Property', () => {
     it('should return a list of properties and get one', done => {
       let r = new Retsly(Retsly.TEST_TOKEN, 'test')
-        .Properties()
-        .exec(done)
+      r.Property()
+      r.exec(done)
+      console.log(r.url())
     })
   })
 
-  describe('Media', () => {
-    it('should return a list of Media and get one', done => {
+  describe('OpenHouse', () => {
+    it('should return a list of OpenHouse and get one', done => {
       let r = new Retsly(Retsly.TEST_TOKEN, 'test')
-        .Media()
-        .exec(done)
-    })
-  })
-
-  describe('Openhouse', () => {
-    it('should return a list of Openhouse and get one', done => {
-      let r = new Retsly(Retsly.TEST_TOKEN, 'test')
-        .Openhouse()
+        .OpenHouse()
         .exec(done)
     })
   })

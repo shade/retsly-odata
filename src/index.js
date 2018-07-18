@@ -17,20 +17,34 @@ class RetslyOData {
 
     this.endpoint = null
     this.response = null
+    this.token = token
     this.query = {}
   }
 
-  exec (cb) {
+  url () {
     const {vendor, endpoint, query} = this
 
+    let url = `${config.BASE_URL}/${vendor}/${endpoint}?`
+
+    for (var param in query) {
+      base += `${param}=${query[param]}&`
+    }
+
+    return url
+  }
+
+  exec (cb) {
+    const {vendor, endpoint, query, token} = this
+
     request
-      .get(`${config.BASE_URL}${vendor}/${endpoint}`)
+      .get(`${config.BASE_URL}/${vendor}/${endpoint}`)
+      .set({'Authorization': `Bearer ${token}`})
       .query(query)
       .end((err, res) => {
         // Update the response, if there are no errors
         this.response = err
           ? null
-          : res
+          : res.body
 
         cb(err, res)
       })
