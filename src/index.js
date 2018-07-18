@@ -22,12 +22,18 @@ class RetslyOData {
 
   exec (cb) {
     const {vendor, endpoint, query} = this
-    const req = request
+
+    request
       .get(`${config.BASE_URL}${vendor}/${endpoint}`)
       .query(query)
+      .end((err, res) => {
+        // Update the response, if there are no errors
+        this.response = err
+          ? null
+          : res
 
-    // If we have a specified cb, use that, otherwise, let go of the promise.
-    return cb ? req.end(cb) : req
+        cb(err, res)
+      })
   }
 
   Property (key) {
