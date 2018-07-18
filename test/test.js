@@ -6,8 +6,15 @@ describe('No param routes', () => {
     it('should return a list of properties and get one', done => {
       let r = new Retsly(Retsly.TEST_TOKEN, 'test')
       r.Property()
-      r.exec(done)
-      console.log(r.url())
+      r.exec((err, res) => {
+        assert(res.body.value.length > 0, 'should return more than one property')
+        r
+          .Property(res.body.value[0].ListingKey)
+          .exec((err, res) => {
+            assert(Object.keys(res.body).length > 4, 'should return one non invalid object')
+            done()
+          })
+      })
     })
   })
 
@@ -15,7 +22,16 @@ describe('No param routes', () => {
     it('should return a list of OpenHouse and get one', done => {
       let r = new Retsly(Retsly.TEST_TOKEN, 'test')
         .OpenHouse()
-        .exec(done)
+        r.exec((err, res) => {
+          assert(res.body.value.length > 0, 'should return more than one property')
+          console.log(res.body.value[0])
+          r
+            .OpenHouse(res.body.value[0].OpenHouseKey)
+            .exec((err, res) => {
+              assert(Object.keys(res.body).length > 4, 'should return one non invalid object')
+              done()
+            })
+        })
     })
   })
 
@@ -23,7 +39,15 @@ describe('No param routes', () => {
     it('should return a list of Office and get one', done => {
       let r = new Retsly(Retsly.TEST_TOKEN, 'test')
         .Office()
-        .exec(done)
+        r.exec((err, res) => {
+          assert(res.body.value.length > 0, 'should return more than one property')
+          r
+            .Office(res.body.value[0].OfficeKey)
+            .exec((err, res) => {
+              assert(Object.keys(res.body).length > 4, 'should return one non invalid object')
+              done()
+            })
+        })
     })
   })
 
@@ -31,7 +55,15 @@ describe('No param routes', () => {
     it('should return a list of Member and get one', done => {
       let r = new Retsly(Retsly.TEST_TOKEN, 'test')
         .Member()
-        .exec(done)
+        r.exec((err, res) => {
+          assert(res.body.value.length > 0, 'should return more than one property')
+          r
+            .Member(res.body.value[0].MemberKey)
+            .exec((err, res) => {
+              assert(Object.keys(res.body).length > 4, 'should return one non invalid object')
+              done()
+            })
+        })
     })
   })
 })
