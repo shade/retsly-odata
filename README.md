@@ -6,34 +6,35 @@
 ```
 ## Usage
 ```js
-  var Retsly = require('odata-js-sdk')
+  var bridge = require('odata-js-sdk')
   // Vendor defaults to `test`
-  var retsly = new Retsly(ACCESS_TOKEN, [vendor])
+  var bridge = new BridgeAPI(ACCESS_TOKEN, [vendor])
 
   // Fetches a list of Properties, provided by the vendor
-  retsly
+  bridge
     .Properties()
     .exec()
 ```
 
 ## API
-### new Retsly(token, [vendor])
-Returns a new instance of Retsly. Requires an API token and optionally set the vendor (the MLS data source), defaults to `test`.
+### new BridgeAPI(token, [vendor])
+Returns a new instance of BridgeAPI. Requires an API token and optionally set the vendor (the MLS data source), defaults to `test`.
 
-## retsly.Property([ListingKey])
-## retsly.Member([MemberKey])
-## retsly.Office([OfficeKey])
-## retsly.OpenHouse([OpenHouseKey])
+## bridge.Property([ListingKey])
+## bridge.Member([MemberKey])
+## bridge.Office([OfficeKey])
+## bridge.OpenHouse([OpenHouseKey])
 Returns a single entity if a key is specified. If a key is not specified all related entities are returned.
 
-## retsly.Media()
+## bridge.Media()
 Returns all media.
 
-## retsly.count()
+## bridge.count()
 The number of results from the most recent query, set to 0 before and during query execution.
 
-## retsly.next()
+## bridge.next()
 Paginates to the next page of results.
 
-## retsly.prev()
+## bridge.prev()
 Paginates to the previous page of results.
+

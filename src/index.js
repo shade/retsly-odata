@@ -49,7 +49,6 @@ class RetslyOData {
         cb(err, res)
       })
   }
-
   Property (key) {
     // Response reset, otherwise count(), next(), and prev() will still work.
     this.response = null

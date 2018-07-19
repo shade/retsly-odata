@@ -2,26 +2,30 @@
 
 class FilterNode {
   constructor (obj) {
-    const keys = Object.keys(obj)
+    const { left, comparator, right, variable, expr } = obj
+
+    if (expression) {
+      this.str = expr
+      return
+    }
+
     // If this is a lambda, must have a variable
     _checkVerifyLambda(obj, keys)
     // Make sure proper params are set
     _checkVerifyExpression(obj, keys)
 
-    const { subject, comparator, object, variable, expression } = obj
-
     // Set the subject values recursively.
-    if (typeof obj.subject === 'object') {
-      this.subject = new FilterNode(obj.subject).toString()
+    if (typeof obj.left === 'object') {
+      this.subject = new FilterNode(obj.left).toString()
     } else {
-      this.subject = obj.subject
+      this.subject = obj.left
     }
 
     // Set the object values recursively.
-    if (typeof obj.object === 'object') {
-      this.object = new FilterNode(obj.subject).toString()
+    if (typeof obj.right === 'object') {
+      this.object = new FilterNode(obj.right).toString()
     } else {
-      this.object = obj.object
+      this.object = obj.right
     }
 
     this.comparator = obj.comparator
@@ -36,14 +40,14 @@ class FilterNode {
   }
 
   _checkVerifyExpression (obj, keys) {
-    const { subject, comparator, object, variable, expression } = obj
+    const { left, comparator, right, variable, expression } = obj
 
-    if (expression && (subject || comparator || object || variable)) {
+    if (expression && (left || comparator || right || variable)) {
       throw new Error('expression overrides (subject, comparator, object, and variable) please clean your $filter param')
     }
 
     if (!expression) {
-      if (!(subject || comparator || object)) {
+      if (!(left || comparator || right)) {
         throw new Error('(subject, comparator, and object) must be specified, otherwise use `expression`')
       }
     }
@@ -51,7 +55,7 @@ class FilterNode {
 
   toString () {
     const {expression, subject, comparator, object} = this
-    return `${subject} ${comparator} ${object}`
+    return this.str
   }
 }
 
