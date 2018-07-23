@@ -14,11 +14,27 @@ const state = {
   listingCache: {},
   queryCompleteCache: {},
   activeAutoComplete: [],
-  activeListing: {}
+  activeListing: {},
+  priceRange: 0,
+  radius: 0
 }
 
 const mutations = {
+  [UPDATE_LISTINGS] (state, data) {
 
+  },
+  [UPDATE_QUERY] (state, data) {
+
+  },
+  [UPDATE_ACTIVE_QUERY] (state, data) {
+
+  },
+  [UPDATE_RADIUS] (state, data) {
+
+  },
+  [UPDATE_PRICE_RANGE] (state, data) {
+
+  }
 }
 
 
