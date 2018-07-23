@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .DS_Store
 node_modules/
 /node_modules
@@ -13,3 +14,6 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sln
+=======
+/node_modules
+>>>>>>> 83b8c594598b7c550c437bc8aef407d90027f19e

@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "name": "comps-tool",
   "version": "1.0.0",
   "description": "Project for looking at Comps",
@@ -66,4 +67,29 @@
     "last 2 versions",
     "not ie <= 8"
   ]
+=======
+  "name": "odata-js-sdk",
+  "version": "0.0.1",
+  "description": "Retsly OData JS SDK",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "mocha --timeout 10000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.rets.io:joetho/odata-js-sdk.git"
+  },
+  "keywords": [
+    "OData",
+    "Retsly",
+    "test"
+  ],
+  "author": "Joe joetho@zillowgroup.com",
+  "license": "MIT",
+  "dependencies": {
+    "assert": "^1.4.1",
+    "mocha": "^5.2.0",
+    "superagent": "^3.8.3"
+  }
+>>>>>>> 83b8c594598b7c550c437bc8aef407d90027f19e
 }
