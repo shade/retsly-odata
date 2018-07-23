@@ -1,6 +1,6 @@
 
-import Vue from 'vue';
-import SDK from 'bridge-sdk';
+import Vue from 'vue'
+import SDK from 'bridge-sdk'
 
 /**
  * Queries to fill an autocomplete
