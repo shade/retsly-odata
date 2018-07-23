@@ -14,7 +14,7 @@ const state = {
   listingCache: {},
   queryCompleteCache: {},
   activeAutoComplete: [],
-  activeListing: {},
+  activeListing: "",
   priceRange: 0,
   radius: 0
 }
