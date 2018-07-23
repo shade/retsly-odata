@@ -1,4 +1,4 @@
-let filter = require('../src/filter')
+let filter = require('../src/lib/filter')
 const assert = require('assert')
 
 
@@ -29,14 +29,36 @@ describe('Simple filters', () => {
           comparator: 'eq',
           right: 'b'
         },
-        comparator: 'eq',
+        comparator: 'and',
         right: {
           left: 'a',
           comparator: 'eq',
           right: 'c'
         }
       })
-      
+
+      assert.equal(f.toString(), '(a eq b) and (a eq c)')
+    })
+    it('Should work recursively, 2 levels', () => {
+      let f = new filter({
+        left: {
+          left: 'a',
+          comparator: 'or',
+          right: {
+            left: 'b',
+            comparator: 'lt',
+            right: 'c'
+          }
+        },
+        comparator: 'and',
+        right: {
+          left: 'a',
+          comparator: 'eq',
+          right: 'c'
+        }
+      })
+
+      assert.equal(f.toString(), '(a or (b lt c)) and (a eq c)')
     })
   })
 })

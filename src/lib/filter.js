@@ -1,4 +1,5 @@
 /* jshint esversion: 6 */
+const modifierMap = require('./modifierMap')
 
 class FilterNode {
   constructor (obj) {

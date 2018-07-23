@@ -38,3 +38,26 @@ Paginates to the next page of results.
 ## bridge.prev()
 Paginates to the previous page of results.
 
+
+## Example
+A simple example of an autocomplete can be seen here,
+The SDK part of the code looks like:
+
+```js
+  var BridgeAPI = require('./odata-js-sdk')
+
+  const Bridge = new BridgeAPI(BridgeAPI.TEST_TOKEN)
+
+  function autocomplete (address) {
+    let prim = Bridge.Properties()
+      .$select('','')
+      .$filter({
+        left: 'UnparsedAddress',
+        comparator: 'startswith',
+        right: address
+      })
+      .exec()
+
+    return prim
+  }
+```

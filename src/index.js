@@ -1,6 +1,6 @@
 const request = require('superagent')
 const config = require('./config')
-const Filter = require('./filter')
+const Filter = require('./lib/filter')
 
 class RetslyOData {
 

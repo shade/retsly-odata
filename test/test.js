@@ -24,7 +24,6 @@ describe('No param routes', () => {
         .OpenHouse()
         r.exec((err, res) => {
           assert(res.body.value.length > 0, 'should return more than one property')
-          console.log(res.body.value[0])
           r
             .OpenHouse(res.body.value[0].OpenHouseKey)
             .exec((err, res) => {
